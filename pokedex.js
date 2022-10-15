@@ -17,6 +17,30 @@ const getIndividualPokemon =  (url) =>{
     .then((response) => response)
 }
 
+const drawPokemon = (pokemons) => {
+     /**
+   * Esta función va a recibir un listado de pokemons.
+   * Primero, borrará todos los que haya en el elemento pokedex.
+   * Luego añadirá un pokemon por cada elemento del array que reciba.
+   */
+
+    pokedex$$.innerHTML = ""
+
+    for (const poke of pokemons) {
+        const li = document.createElement("li")
+        li.classList.add("card")
+        const info  = `
+        <img src=${poke.sprites.front_default} alt=${poke.name}>
+        <p class="card-title">${poke.name}<p>
+        
+        
+        `
+        li.innerHTML = info
+        pokedex$$.appendChild(li)
+    }
+
+}
+
 
 /* Esta función inicia todas la funciones del archivo */
 const init = async () => {
@@ -28,9 +52,15 @@ const init = async () => {
         const pokemoninfo =  await getIndividualPokemon(pokemon.url)
         ALLPOKEMONS.push(pokemoninfo)
     }
-    
+
     console.log(ALLPOKEMONS);
-   
+    /* for (const pokemon of ALLPOKEMONS) {
+        for (const types of pokemon.types) {
+            console.log(types.type.name);
+        }
+    } */
+    
+    drawPokemon(ALLPOKEMONS)
 }
 
 init()
